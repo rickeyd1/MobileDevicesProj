@@ -11,8 +11,10 @@ public class DrugAlarm {
     private DayGroup mDays;
     private String mDosage;
     private Urgency mUrgency;
+    // Id in the database
+    private int mId;
 
-    public DrugAlarm(){
+    DrugAlarm(){
         mName = "";
         mTime = new TimePack(0, 0);
         mDays = new DayGroup();
@@ -20,16 +22,19 @@ public class DrugAlarm {
         mUrgency = Urgency.MID_URGENCY;
     }
 
-    public String name(){return mName;}
-    public TimePack time(){return mTime;}
-    public DayGroup days(){return mDays;}
-    public String dosage(){return mDosage;}
-    public Urgency urgency(){return mUrgency;}
+    String name(){return mName;}
+    TimePack time(){return mTime;}
+    DayGroup days(){return mDays;}
+    String dosage(){return mDosage;}
+    Urgency urgency(){return mUrgency;}
+    int id(){return mId;}
 
-    public void setName(String n){mName = n;};
-    public void setTime(TimePack t){mTime = t;}
-    public void setDays(DayGroup d){mDays = d;}
-    public void setUrgency(Urgency u){mUrgency = u;}
+    void setName(String n){mName = n;};
+    void setTime(TimePack t){mTime = t;}
+    void setDays(DayGroup d){mDays = d;}
+    void setDosage(String d){mDosage = d;}
+    void setUrgency(Urgency u){mUrgency = u;}
+    void setId(int i){mId = i;}
 
 
 }

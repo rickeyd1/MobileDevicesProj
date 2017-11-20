@@ -1,7 +1,7 @@
 package com.mba.drc.medicalapp;
 
 /**
- * Created by dagan on 11/19/17.
+ * How urgent it is you take your meds
  */
 
 public enum Urgency {

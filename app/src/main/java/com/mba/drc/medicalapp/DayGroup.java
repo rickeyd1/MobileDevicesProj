@@ -9,7 +9,7 @@ public class DayGroup {
     private boolean mFriday;
     private boolean mSaturday;
 
-    public DayGroup(){
+    DayGroup(){
         mSunday = false;
         mMonday = false;
         mTuesday = false;
@@ -17,6 +17,15 @@ public class DayGroup {
         mThursday = false;
         mFriday = false;
         mSaturday = false;
+    }
+    DayGroup(int dnum){
+        mSunday = ((dnum>>0) & 0x01) != 0;
+        mMonday = ((dnum>>1) & 0x01) != 0;
+        mTuesday = ((dnum>>2) & 0x01) != 0;
+        mWednesday = ((dnum>>3) & 0x01) != 0;
+        mThursday = ((dnum>>4) & 0x01) != 0;
+        mFriday = ((dnum>>5) & 0x01) != 0;
+        mSaturday = ((dnum>>6) & 0x01) != 0;
     }
 
     boolean sunday(){return mSunday;}

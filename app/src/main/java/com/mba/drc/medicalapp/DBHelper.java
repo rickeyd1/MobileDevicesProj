@@ -106,7 +106,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
     
-    public void addDrugAlarm(DrugAlarm drugAlarm){
+    void addDrugAlarm(DrugAlarm drugAlarm){
         SQLiteDatabase db = this.getWritableDatabase();
         final String name = drugAlarm.name();
         final int time = drugAlarm.time().toInt();
@@ -116,7 +116,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         final String formatString = "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (%s, %d, %d, %s, %d)";
 
-        String addStatement = String.format(formatString,
+        final String addStatement = String.format(formatString,
                 DRUG_TABLE_NAME,
                 KEY_NAME, KEY_TIME, KEY_DAYS, KEY_DOSAGE, KEY_URGENCY,
                 name, time, days, dosage, urgency);
@@ -124,6 +124,46 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(addStatement);
         db.close();
 
+    }
+
+    // Return list of all drug alarms
+     ArrayList<DrugAlarm> getDrugAlarms(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        final String queryStatement = "SELECT * FROM "+DRUG_TABLE_NAME;
+
+        ArrayList<DrugAlarm> returnList = new ArrayList<DrugAlarm>();
+        // Iterate over table and keep adding drug alarms to list
+        try(Cursor cursor = db.rawQuery(queryStatement, null)){
+            while(cursor.moveToNext()){
+                DrugAlarm drugAlarm = new DrugAlarm();
+                drugAlarm.setId(
+                        cursor.getInt(drugTable.columnIndex(KEY_ID))
+                );
+                drugAlarm.setName(
+                        cursor.getString(drugTable.columnIndex(KEY_NAME))
+                );
+                drugAlarm.setDays(
+                        new DayGroup(
+                            cursor.getInt(drugTable.columnIndex(KEY_DAYS))
+                        )
+                );
+                drugAlarm.setTime(
+                        new TimePack(
+                                cursor.getInt(drugTable.columnIndex(KEY_TIME))
+                        )
+                );
+                drugAlarm.setDosage(
+                        cursor.getString(
+                                drugTable.columnIndex(KEY_DOSAGE)
+                        )
+                );
+                drugAlarm.setUrgency(
+                        Urgency.values()[cursor.getInt(drugTable.columnIndex(KEY_URGENCY))]
+                );
+                returnList.add(drugAlarm);
+            }
+        }
+        return returnList;
     }
 
 

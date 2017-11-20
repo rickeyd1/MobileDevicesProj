@@ -12,6 +12,12 @@ print("\tDayGroup(){")
 for day in days:
 	print(f"\t\tm{day.title()} = false;")
 print("\t}")
+print("\tDayGroup(int dnum){")
+k = 0
+for day in days:
+	print(f"\t\tm{day.title()} = ((dnum>>{k}) & 0x01) != 0;")
+	k += 1
+print("\t}")
 print("")
 for day in days:
 	print(f"\tboolean {day}(){{return m{day.title()};}}")
