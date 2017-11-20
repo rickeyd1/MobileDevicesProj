@@ -34,6 +34,10 @@ public class DBHelper extends SQLiteOpenHelper {
             return _key_mirror.indexOf(columnName);
         }
 
+        int numberOfColumns(){
+            return _key_mirror.size();
+        }
+
         // export as CREATE TABLE SQL query
         String asQuery(){
             String output = "CREATE TABLE IF NOT EXISTS "+_name+" (";
@@ -63,35 +67,35 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_TIME_RESPONDED = "time_responded";
     private static final String KEY_DRUG_ID = "drug_alarm_id";
     private static final String KEY_RESPONSE = "response";
-    private Table drug_table;
-    private Table event_table;
+    private Table drugTable;
+    private Table eventTable;
 
     public DBHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
-        drug_table = new Table(DRUG_TABLE_NAME);
-        drug_table.addColumn(KEY_ID, "INTEGER PRIMARY KEY");
-        drug_table.addColumn(KEY_NAME, "TEXT");
-        drug_table.addColumn(KEY_TIME, "INTEGER");
-        drug_table.addColumn(KEY_DAYS, "INTEGER");
-        drug_table.addColumn(KEY_DOSAGE, "TEXT");
-        drug_table.addColumn(KEY_URGENCY, "INTEGER");
+        drugTable = new Table(DRUG_TABLE_NAME);
+        drugTable.addColumn(KEY_ID, "INTEGER PRIMARY KEY");
+        drugTable.addColumn(KEY_NAME, "TEXT");
+        drugTable.addColumn(KEY_TIME, "INTEGER");
+        drugTable.addColumn(KEY_DAYS, "INTEGER");
+        drugTable.addColumn(KEY_DOSAGE, "TEXT");
+        drugTable.addColumn(KEY_URGENCY, "INTEGER");
 
-        event_table = new Table(EVENT_TABLE_NAME);
-        event_table.addColumn(KEY_ID, "INTEGER PRIMARY KEY");
-        event_table.addColumn(KEY_TIME_OCCURRED, "INTEGER");
-        event_table.addColumn(KEY_TIME_RESPONDED, "INTEGER");
-        event_table.addColumn(KEY_DRUG_ID, "INTEGER");
-        event_table.addColumn(KEY_RESPONSE, "INTEGER");
+        eventTable = new Table(EVENT_TABLE_NAME);
+        eventTable.addColumn(KEY_ID, "INTEGER PRIMARY KEY");
+        eventTable.addColumn(KEY_TIME_OCCURRED, "INTEGER");
+        eventTable.addColumn(KEY_TIME_RESPONDED, "INTEGER");
+        eventTable.addColumn(KEY_DRUG_ID, "INTEGER");
+        eventTable.addColumn(KEY_RESPONSE, "INTEGER");
     }
 
 
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        db.execSQL(drug_table.asQuery());
-        db.execSQL(event_table.asQuery());
+        db.execSQL(drugTable.asQuery());
+        db.execSQL(eventTable.asQuery());
     }
 
     //upgrade database
@@ -100,6 +104,26 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+DRUG_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS "+EVENT_TABLE_NAME);
         onCreate(db);
+    }
+    
+    public void addDrugAlarm(DrugAlarm drugAlarm){
+        SQLiteDatabase db = this.getWritableDatabase();
+        final String name = drugAlarm.name();
+        final int time = drugAlarm.time().toInt();
+        final int days = drugAlarm.days().toInt();
+        final String dosage = drugAlarm.dosage();
+        final int urgency = drugAlarm.urgency().value();
+
+        final String formatString = "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (%s, %d, %d, %s, %d)";
+
+        String addStatement = String.format(formatString,
+                DRUG_TABLE_NAME,
+                KEY_NAME, KEY_TIME, KEY_DAYS, KEY_DOSAGE, KEY_URGENCY,
+                name, time, days, dosage, urgency);
+
+        db.execSQL(addStatement);
+        db.close();
+
     }
 
 

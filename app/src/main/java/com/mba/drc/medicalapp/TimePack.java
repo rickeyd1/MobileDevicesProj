@@ -5,10 +5,18 @@ package com.mba.drc.medicalapp;
  */
 
 public class TimePack {
-    public int hour;
-    public int minute;
-    public TimePack(int theHour, int theMinute){
+    int hour;
+    int minute;
+    TimePack(int theHour, int theMinute){
         hour = theHour;
         minute = theMinute;
+    }
+
+    // Must be able to convert to and fro integer
+    // in order to store in SQL database
+    int toInt(){
+        int rv = hour<<16;// First 16 bits are the hour
+        rv |= minute;// Last 16 bits are the minute
+        return rv;
     }
 }
