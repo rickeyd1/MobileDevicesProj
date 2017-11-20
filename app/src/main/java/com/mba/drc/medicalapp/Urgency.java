@@ -8,7 +8,7 @@ public enum Urgency {
     LOW_URGENCY(1), MID_URGENCY(2), HIGH_URGENCY(4);
 
     private final int mValue;
-    private Urgency(int value){
+    Urgency(int value){
         this.mValue = value;
     }
     int value(){

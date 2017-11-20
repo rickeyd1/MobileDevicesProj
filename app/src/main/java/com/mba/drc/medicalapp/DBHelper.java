@@ -19,6 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
         private String _name;
 
         Table(String name){
+            _key_mirror = new ArrayList<>();
             _map = new LinkedHashMap<String, String>();
             _name = name;
         }
@@ -143,6 +144,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(drugTable.columnIndex(KEY_NAME))
                 );
                 drugAlarm.setDays(
+                        // For days and time, we have to convert from ints to the class
                         new DayGroup(
                             cursor.getInt(drugTable.columnIndex(KEY_DAYS))
                         )
