@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="input_title">Add new reminder</string>
+
+    <!-- Labels -->
+    <string name="input_name">Drug:</string>
+    <string name="input_time">Time:</string>
+    <string name="input_dosage">Dosage:</string>
+
+    <!-- Day of the week -->
+    <string name="input_day">Day</string>
+    <string name="input_monday">M</string>
+    <string name="input_tuesday">T</string>
+    <string name="input_wednesday">W</string>
+    <string name="input_thursday">Th</string>
+    <string name="input_friday">F</string>
+    <string name="input_saturday">Sa</string>
+    <string name="input_sunday">S</string>
+
+    <!-- Urgency Strings -->
+    <string name="input_urgency">Urgency</string>
+    <string name="input_low">Low</string>
+    <string name="input_medium">Medium</string>
+    <string name="input_high">Safety Critical</string>
+
+    <!-- Buttons -->
+    <string name="input_ok_button">Add</string>
+    <string name="input_cancel_button">Cancel</string>
+</resources>
