@@ -1,5 +1,7 @@
 package com.mba.drc.medicalapp;
 
+import java.util.Locale;
+
 /**
  * Just stores hours and minutes
  */
@@ -30,6 +32,11 @@ class TimePack {
         return rv;
     }
 
-
+    public String toString(){
+        return String.format(Locale.US,
+                "%d:%d %s",
+                hour()%12, minute(),
+                hour()>12?"PM":"AM");
+    }
 
 }

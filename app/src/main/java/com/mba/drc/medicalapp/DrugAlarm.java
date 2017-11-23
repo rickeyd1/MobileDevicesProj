@@ -38,7 +38,10 @@ public class DrugAlarm {
 
     @Override
     public String toString(){
-        return String.format("%s - %s", name(), dosage());
+        return String.format("%-30s\t%-30s\t%-30s",
+                name(),
+                days().toString(),
+                time().toString());
     }
 
 
