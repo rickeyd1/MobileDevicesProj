@@ -49,6 +49,12 @@ public class InputActivity extends AppCompatActivity {
         dbHelper = new DBHelper(this);
     }
 
+    public void cancel(View view){
+        // Return to main
+        Intent mainActivity = new Intent(this, MainActivity.class);
+        startActivity(mainActivity);
+    }
+
     public void add(View view){
         // Get and validate all inputs
         String name;
@@ -103,4 +109,6 @@ public class InputActivity extends AppCompatActivity {
         }
 
     }
+
+
 }
