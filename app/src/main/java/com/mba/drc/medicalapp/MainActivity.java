@@ -2,8 +2,6 @@ package com.mba.drc.medicalapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.view.LayoutInflater;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +10,7 @@ import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import android.content.Intent;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void addNewDrugAlarm(View view){
-
+        Intent inputActivity = new Intent(this, InputActivity.class);
+        startActivity(inputActivity);
     }
 }

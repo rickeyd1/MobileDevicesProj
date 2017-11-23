@@ -75,35 +75,35 @@
             android:text="@string/input_monday" />
 
         <CheckBox
-            android:id="@+id/TuesCheck"
+            android:id="@+id/tuesCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/input_tuesday" />
 
         <CheckBox
-            android:id="@+id/WedCheck"
+            android:id="@+id/wedCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/input_wednesday" />
 
         <CheckBox
-            android:id="@+id/ThursCheck"
+            android:id="@+id/thursCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/input_thursday" />
 
         <CheckBox
-            android:id="@+id/FriCheck"
+            android:id="@+id/friCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/input_friday" />
 
         <CheckBox
-            android:id="@+id/SatCheck"
+            android:id="@+id/satCheck"
             android:layout_width="46dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
