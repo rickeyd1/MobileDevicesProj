@@ -134,10 +134,21 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    // Return a particular drug alarm
+    DrugAlarm getDrugAlarm(int id){
+        return getDrugAlarmsByQuery(String.format(
+                "SELECT * FROM %s WHERE id=%d", DRUG_TABLE_NAME, id)
+        ).get(0);
+    }
+
     // Return list of all drug alarms
-     ArrayList<DrugAlarm> getDrugAlarms(){
+    ArrayList<DrugAlarm> getDrugAlarms(){
+        return getDrugAlarmsByQuery("SELECT * FROM "+DRUG_TABLE_NAME);
+    }
+
+    // Return a list of drug alarms as given by a particular query
+    private ArrayList<DrugAlarm> getDrugAlarmsByQuery(String queryStatement){
         SQLiteDatabase db = this.getReadableDatabase();
-        final String queryStatement = "SELECT * FROM "+DRUG_TABLE_NAME;
 
         ArrayList<DrugAlarm> returnList = new ArrayList<DrugAlarm>();
         // Iterate over table and keep adding drug alarms to list

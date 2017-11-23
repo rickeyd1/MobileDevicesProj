@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="input_title">Add new reminder</string>
+    <string name="input_title_alternative">Update reminder</string>
 
     <!-- Labels -->
     <string name="input_name">Drug:</string>
@@ -25,5 +26,6 @@
 
     <!-- Buttons -->
     <string name="input_ok_button">Add</string>
+    <string name="input_ok_button_alternative">Update</string>
     <string name="input_cancel_button">Cancel</string>
 </resources>

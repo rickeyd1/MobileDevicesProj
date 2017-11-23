@@ -8,6 +8,7 @@ import android.widget.RadioGroup;
 import android.widget.CheckBox;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.TextView;
 import android.content.Intent;
 
 /**
@@ -27,6 +28,8 @@ public class InputActivity extends AppCompatActivity {
     CheckBox satCB;
     EditText dosageET;
     RadioGroup urgencyRG;
+    DrugAlarm drugAlarm;
+    boolean updateExisting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,43 @@ public class InputActivity extends AppCompatActivity {
         satCB = findViewById(R.id.satCheck);
 
         dbHelper = new DBHelper(this);
+
+        // Check if we're updating an existing thing-a-mahoozit
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra(MainActivity.INTENT_EXTRA_UPDATE_DRUG_ALARM, false)){
+            updateExisting = true;
+            int drugId = intent.getIntExtra(MainActivity.INTENT_EXTRA_DRUG_ALARM_ID, -1);
+            drugAlarm = dbHelper.getDrugAlarm(drugId);
+
+            // Populate edit texts and such
+            nameET.setText(drugAlarm.name());
+            dosageET.setText(drugAlarm.dosage());
+            timeTP.setCurrentHour(drugAlarm.time().hour());
+            timeTP.setCurrentMinute(drugAlarm.time().minute());
+            sunCB.setChecked(drugAlarm.days().sunday());
+            monCB.setChecked(drugAlarm.days().monday());
+            tuesCB.setChecked(drugAlarm.days().tuesday());
+            wedCB.setChecked(drugAlarm.days().wednesday());
+            thursCB.setChecked(drugAlarm.days().thursday());
+            friCB.setChecked(drugAlarm.days().friday());
+            satCB.setChecked(drugAlarm.days().saturday());
+            switch(drugAlarm.urgency()){
+                case LOW_URGENCY:
+                    urgencyRG.check(R.id.low_urgency_rb);
+                    break;
+                case MID_URGENCY:
+                    urgencyRG.check(R.id.medium_urgency_rb);
+                    break;
+                case HIGH_URGENCY:
+                    urgencyRG.check(R.id.high_urgency_db);
+                    break;
+            }
+
+            // Make different title
+            ((TextView)findViewById(R.id.IL_Title)).setText(R.string.input_title_alternative);
+
+        }
+
     }
 
     public void cancel(View view){
