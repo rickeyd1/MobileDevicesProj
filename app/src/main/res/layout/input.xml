@@ -182,6 +182,7 @@
         android:id="@+id/input_cancel_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="cancel"
         android:text="@string/input_cancel_button" />
 
 </LinearLayout>
