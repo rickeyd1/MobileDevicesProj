@@ -131,7 +131,31 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(addStatement);
         db.close();
+    }
 
+    void updateDrugAlarm(DrugAlarm drugAlarm){
+        SQLiteDatabase db = this.getWritableDatabase();
+        final int id = drugAlarm.id();
+        final String name = drugAlarm.name();
+        final int time = drugAlarm.time().toInt();
+        final int days = drugAlarm.days().toInt();
+        final String dosage = drugAlarm.dosage();
+        final int urgency = drugAlarm.urgency().value();
+
+        final String formatString =
+                "UPDATE %s SET %s=%s, %s=%d, %s=%d, %s=%s, %s=%d WHERE %s=%d";
+
+        final String updateStatement = String.format(formatString,
+                DRUG_TABLE_NAME,
+                KEY_NAME, sqlEscape(name),
+                KEY_TIME, time,
+                KEY_DAYS, days,
+                KEY_DOSAGE, sqlEscape(dosage),
+                KEY_URGENCY, urgency,
+                KEY_ID, id);
+
+        db.execSQL(updateStatement);
+        db.close();
     }
 
     // Return a particular drug alarm

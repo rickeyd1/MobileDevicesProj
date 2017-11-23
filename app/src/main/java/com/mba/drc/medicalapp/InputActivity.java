@@ -10,6 +10,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.TextView;
 import android.content.Intent;
+import android.widget.Button;
 
 /**
  * Created by dagan on 11/23/17.
@@ -84,6 +85,8 @@ public class InputActivity extends AppCompatActivity {
 
             // Make different title
             ((TextView)findViewById(R.id.IL_Title)).setText(R.string.input_title_alternative);
+            Button okButton = findViewById(R.id.input_ok_button);
+            okButton.setText(R.string.input_ok_button_alternative);
 
         }
 
@@ -130,14 +133,20 @@ public class InputActivity extends AppCompatActivity {
 
         try {
 
-            // Create new DrugAlarm and add to DB
-            DrugAlarm drugAlarm = new DrugAlarm();
+            // Create new or existing DrugAlarm and add/update to DB
+            if(!updateExisting) {
+                drugAlarm = new DrugAlarm();
+            }
             drugAlarm.setName(name);
             drugAlarm.setTime(time);
             drugAlarm.setDays(days);
             drugAlarm.setDosage(dosage);
             drugAlarm.setUrgency(urgency);
-            dbHelper.addDrugAlarm(drugAlarm);
+            if(updateExisting){
+                dbHelper.updateDrugAlarm(drugAlarm);
+            }else {
+                dbHelper.addDrugAlarm(drugAlarm);
+            }
 
             // Return to main
             Intent mainActivity = new Intent(this, MainActivity.class);
@@ -145,7 +154,6 @@ public class InputActivity extends AppCompatActivity {
 
         }catch (Exception e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-            return;
         }
 
     }
