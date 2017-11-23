@@ -43,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String asQuery(){
             String output = "CREATE TABLE IF NOT EXISTS "+_name+" (";
             Boolean passedFirst = false;
-            for(String key: _map.values()){
+            for(String key: _map.keySet()){
                 if(passedFirst){
                     output += ",";
                 }

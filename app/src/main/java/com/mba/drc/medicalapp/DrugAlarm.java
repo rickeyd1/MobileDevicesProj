@@ -36,5 +36,10 @@ public class DrugAlarm {
     void setUrgency(Urgency u){mUrgency = u;}
     void setId(int i){mId = i;}
 
+    @Override
+    public String toString(){
+        return String.format("%s - %s", name(), dosage());
+    }
+
 
 }
