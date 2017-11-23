@@ -48,4 +48,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
     }
+
+
+    public void addNewDrugAlarm(View view){
+
+    }
 }
