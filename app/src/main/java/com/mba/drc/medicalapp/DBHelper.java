@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Table(String name){
             _key_mirror = new ArrayList<>();
-            _map = new LinkedHashMap<String, String>();
+            _map = new LinkedHashMap<>();
             _name = name;
         }
 
@@ -71,7 +72,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private Table drugTable;
     private Table eventTable;
 
-    public DBHelper(Context context)
+    DBHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
@@ -108,7 +109,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // Wrap in quotes and make safe-ish...
-    static String sqlEscape(String string){
+    static private String sqlEscape(String string){
         string = string.replace('\'', '"');
         string = "'"+string+"'";
         return string;
@@ -124,7 +125,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         final String formatString = "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (%s, %d, %d, %s, %d)";
 
-        final String addStatement = String.format(formatString,
+        final String addStatement = String.format(Locale.US,
+                formatString,
                 DRUG_TABLE_NAME,
                 KEY_NAME, KEY_TIME, KEY_DAYS, KEY_DOSAGE, KEY_URGENCY,
                 sqlEscape(name), time, days, sqlEscape(dosage), urgency);
@@ -145,7 +147,8 @@ public class DBHelper extends SQLiteOpenHelper {
         final String formatString =
                 "UPDATE %s SET %s=%s, %s=%d, %s=%d, %s=%s, %s=%d WHERE %s=%d";
 
-        final String updateStatement = String.format(formatString,
+        final String updateStatement = String.format(Locale.US,
+                formatString,
                 DRUG_TABLE_NAME,
                 KEY_NAME, sqlEscape(name),
                 KEY_TIME, time,
@@ -161,6 +164,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Return a particular drug alarm
     DrugAlarm getDrugAlarm(int id){
         return getDrugAlarmsByQuery(String.format(
+                Locale.US,
                 "SELECT * FROM %s WHERE id=%d", DRUG_TABLE_NAME, id)
         ).get(0);
     }
@@ -174,7 +178,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private ArrayList<DrugAlarm> getDrugAlarmsByQuery(String queryStatement){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        ArrayList<DrugAlarm> returnList = new ArrayList<DrugAlarm>();
+        ArrayList<DrugAlarm> returnList = new ArrayList<>();
         // Iterate over table and keep adding drug alarms to list
         try(Cursor cursor = db.rawQuery(queryStatement, null)){
             while(cursor.moveToNext()){

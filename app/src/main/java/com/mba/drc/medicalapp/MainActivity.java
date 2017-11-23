@@ -12,10 +12,6 @@ import android.content.Intent;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private List<DrugAlarm> alarms;
-    private ListView listView;
-    private ArrayAdapter<DrugAlarm> drugAlarmAdapter;
     static final String INTENT_EXTRA_UPDATE_DRUG_ALARM = "update_drug_alarm";
     static final String INTENT_EXTRA_DRUG_ALARM_ID = "drug_alarm_id";
     @Override
@@ -23,16 +19,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         DBHelper dbHelper = new DBHelper(this);
-
+        final List<DrugAlarm> alarms;
         try {
             alarms = dbHelper.getDrugAlarms();
 
 
-            drugAlarmAdapter = new ArrayAdapter<>(this,
+            ArrayAdapter<DrugAlarm> drugAlarmAdapter = new ArrayAdapter<>(this,
                     R.layout.home_item,
                     R.id.list_item_event_textView,
                     alarms);
-            listView = findViewById(R.id.listView_event);
+            ListView listView = findViewById(R.id.listView_event);
             listView.setAdapter(drugAlarmAdapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
