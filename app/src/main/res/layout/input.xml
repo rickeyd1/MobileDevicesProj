@@ -45,13 +45,15 @@
             android:text="@string/input_time"
             android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
-        <EditText
-            android:id="@+id/time_et"
+        <TimePicker
+            android:id="@+id/time_tp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="time" />
+            android:inputType="time"
+            android:singleLine="true"
+            android:timePickerMode="spinner" />
 
     </LinearLayout>
 
