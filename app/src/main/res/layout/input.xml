@@ -175,6 +175,7 @@
         android:id="@+id/input_ok_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="add"
         android:text="@string/input_ok_button" />
 
     <Button

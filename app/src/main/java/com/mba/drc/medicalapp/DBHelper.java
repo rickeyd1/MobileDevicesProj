@@ -106,6 +106,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+EVENT_TABLE_NAME);
         onCreate(db);
     }
+
+    // Wrap in quotes and make safe-ish...
+    static String sqlEscape(String string){
+        string = string.replace('\'', '"');
+        string = "'"+string+"'";
+        return string;
+    }
     
     void addDrugAlarm(DrugAlarm drugAlarm){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -120,7 +127,7 @@ public class DBHelper extends SQLiteOpenHelper {
         final String addStatement = String.format(formatString,
                 DRUG_TABLE_NAME,
                 KEY_NAME, KEY_TIME, KEY_DAYS, KEY_DOSAGE, KEY_URGENCY,
-                name, time, days, dosage, urgency);
+                sqlEscape(name), time, days, sqlEscape(dosage), urgency);
 
         db.execSQL(addStatement);
         db.close();

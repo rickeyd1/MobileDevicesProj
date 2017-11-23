@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.CheckBox;
 import android.widget.TimePicker;
+import android.widget.Toast;
+import android.content.Intent;
 
 /**
  * Created by dagan on 11/23/17.
@@ -48,7 +50,57 @@ public class InputActivity extends AppCompatActivity {
     }
 
     public void add(View view){
+        // Get and validate all inputs
+        String name;
+        TimePack time;
+        DayGroup days = new DayGroup();
+        String dosage;
+        Urgency urgency;
+        try {
+            name = nameET.getText().toString();
+            if(name.equals("")){
+                Toast.makeText(this, "Please enter a drug name", Toast.LENGTH_LONG).show();
+                return;
+            }
+            time = new TimePack(timeTP.getCurrentHour(), timeTP.getCurrentMinute());
+            dosage = dosageET.getText().toString();
+            days.setSunday(sunCB.isChecked());
+            days.setMonday(monCB.isChecked());
+            days.setTuesday(tuesCB.isChecked());
+            days.setWednesday(wedCB.isChecked());
+            days.setThursday(thursCB.isChecked());
+            days.setFriday(friCB.isChecked());
+            days.setSaturday(satCB.isChecked());
+            if (days.toInt() == 0){
+                Toast.makeText(this, "Please select at least one day", Toast.LENGTH_LONG).show();
+                return;
+            }
+            urgency = Urgency.MID_URGENCY;
 
+        }catch(Exception e){
+            Toast.makeText(this, "Invalid input", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        try {
+
+            // Create new DrugAlarm and add to DB
+            DrugAlarm drugAlarm = new DrugAlarm();
+            drugAlarm.setName(name);
+            drugAlarm.setTime(time);
+            drugAlarm.setDays(days);
+            drugAlarm.setDosage(dosage);
+            drugAlarm.setUrgency(urgency);
+            dbHelper.addDrugAlarm(drugAlarm);
+
+            // Return to main
+            Intent mainActivity = new Intent(this, MainActivity.class);
+            startActivity(mainActivity);
+
+        }catch (Exception e){
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+            return;
+        }
 
     }
 }
