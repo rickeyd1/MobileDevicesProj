@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:minHeight = "?android:attr/listPreferredItemHeight"
+    android:id="@+id/list_item_event_textView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center_vertical"
-    android:onClick="addNewDrugAlarm"
-    android:id="@+id/list_item_event_textView">
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:textAppearance="@android:style/TextAppearance.Material.Medium">
 
 </TextView>

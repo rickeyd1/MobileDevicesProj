@@ -2,46 +2,46 @@ package com.mba.drc.medicalapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
-import android.view.ViewGroup;
 import android.widget.Toast;
 import android.content.Intent;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    DBHelper dbHelper;
+    private List<DrugAlarm> alarms;
+    private ListView listView;
+    private ArrayAdapter<DrugAlarm> drugAlarmAdapter;
+    static final String INTENT_EXTRA_UPDATE_DRUG_ALARM = "update_drug_alarm";
+    static final String INTENT_EXTRA_DRUG_ALARM_ID = "drug_alarm_id";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-        dbHelper = new DBHelper(this);
+        DBHelper dbHelper = new DBHelper(this);
 
         try {
-            List<DrugAlarm> alarms = dbHelper.getDrugAlarms();
-            DrugAlarm drugAlarm = new DrugAlarm();
-            drugAlarm.setName("Robodril(not_in_db)");
-            drugAlarm.setTime(new TimePack(8, 30));
-            drugAlarm.setDays(new DayGroup());
-            drugAlarm.setDosage("1 L");
-
-            alarms.add(drugAlarm);
-            alarms.add(drugAlarm);
-            alarms.add(drugAlarm);
+            alarms = dbHelper.getDrugAlarms();
 
 
-
-            ArrayAdapter<DrugAlarm> musicEventAdapter = new ArrayAdapter<DrugAlarm>(this,
+            drugAlarmAdapter = new ArrayAdapter<>(this,
                     R.layout.home_item,
                     R.id.list_item_event_textView,
                     alarms);
-            ListView listView = (ListView) findViewById(R.id.listView_event);
-            listView.setAdapter(musicEventAdapter);
+            listView = findViewById(R.id.listView_event);
+            listView.setAdapter(drugAlarmAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    final int drugId = alarms.get(position).id();
+                    updateDrugAlarm(drugId);
+                }
+            });
 
         }catch(Exception e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
@@ -51,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void addNewDrugAlarm(View view){
         Intent inputActivity = new Intent(this, InputActivity.class);
+        inputActivity.putExtra(INTENT_EXTRA_UPDATE_DRUG_ALARM, false);
+        startActivity(inputActivity);
+    }
+
+    // Note: drugId is the SQL id
+    public void updateDrugAlarm(int drugId){
+        Intent inputActivity = new Intent(this, InputActivity.class);
+        inputActivity.putExtra(INTENT_EXTRA_UPDATE_DRUG_ALARM, true);
+        inputActivity.putExtra(INTENT_EXTRA_DRUG_ALARM_ID, drugId);
         startActivity(inputActivity);
     }
 }
