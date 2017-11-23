@@ -53,6 +53,9 @@ def generate_class_source():
 
 	# Convert to string
 	source += "\tpublic String toString(){\n\t\tString rv = \"\";\n"
+	source += "\t\tif(toInt() == 0x7F) return \"Everyday\";\n"
+	source += "\t\telse if(toInt() == 0x3E) return \"Weekdays\";\n"
+	source += "\t\telse if(toInt() == 0x41) return \"Weekends\";\n"
 	for i in range(len(DAYS)):
 		source += f"\t\tif(m{DAYS[i].title()}) rv += \"{SHORT_DAYS[i]}\";\n"
 	source += "\t\treturn rv;\n\t}\n"

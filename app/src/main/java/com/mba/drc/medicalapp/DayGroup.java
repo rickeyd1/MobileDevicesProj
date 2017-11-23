@@ -60,6 +60,9 @@ package com.mba.drc.medicalapp;
 	}
 	public String toString(){
 		String rv = "";
+		if(toInt() == 0x7F) return "Everyday";
+		else if(toInt() == 0x3E) return "Weekdays";
+		else if(toInt() == 0x41) return "Weekends";
 		if(mSunday) rv += "Su";
 		if(mMonday) rv += "M";
 		if(mTuesday) rv += "T";
