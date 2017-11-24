@@ -128,8 +128,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return string;
     }
 
-    // Schedule any alarms
-   int scheduleAll(Context context, Class theClass){
+    // Schedule any alarms that are unscheduled
+    int scheduleAll(Context context, Class theClass){
        SQLiteDatabase db = this.getWritableDatabase();
         // Get all unscheduled drug alarms (ie where SCHEDULE is 0)
         ArrayList<DrugAlarm> drugAlarms = getDrugAlarmsByQuery(String.format(
@@ -173,6 +173,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return drugAlarms.size();
 
     }
+
+    void unscheduleDrugAlarm(Context context, Class theClass, DrugAlarm drugAlarm){
+        // unschedule in alarm manager
+        Intent intent = new Intent(context, theClass);
+        PendingIntent pendingIntent= PendingIntent.getBroadcast(
+                context,drugAlarm.schedule(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+    }
+
+
     
     void addDrugAlarm(DrugAlarm drugAlarm){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -215,8 +226,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 KEY_DAYS, days,
                 KEY_DOSAGE, sqlEscape(dosage),
                 KEY_URGENCY, urgency,
-                KEY_ID, id,
-                KEY_SCHEDULE, drugAlarm.schedule()
+                KEY_SCHEDULE, 0,
+                KEY_ID, id
                 );
 
         db.execSQL(updateStatement);

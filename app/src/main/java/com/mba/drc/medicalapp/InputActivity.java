@@ -157,12 +157,9 @@ public class InputActivity extends AppCompatActivity {
             }
 
             // Run scheduler
+            if(updateExisting)dbHelper.unscheduleDrugAlarm(this, AlarmReceiver.class, drugAlarm);
             if(0 == dbHelper.scheduleAll(this, AlarmReceiver.class)){
-                Toast.makeText(this, "0 alarms w/ 0", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(this,
-                        String.format(Locale.US, "%d", drugAlarm.time().getTimeInMillis()),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "0 alarms w/ a 0 schedule", Toast.LENGTH_SHORT).show();
             }
 
 
