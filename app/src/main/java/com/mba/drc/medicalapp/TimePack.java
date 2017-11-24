@@ -45,7 +45,6 @@ class TimePack {
         calendar.set(Calendar.HOUR_OF_DAY, mHour);
         calendar.set(Calendar.MINUTE, mMinute);
         return calendar.getTimeInMillis();
-
     }
 
 }

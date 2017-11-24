@@ -4,6 +4,8 @@ package com.mba.drc.medicalapp; /**
 import com.mba.drc.medicalapp.DayGroup;
 
 import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DrugAlarm {
     private String mName;
@@ -49,5 +51,42 @@ public class DrugAlarm {
                 time().toString());
     }
 
+    private int getCurrentDay(){
+        return Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+    }
+    private int getDayOffsetNextAlarm(){
+        final int dayInt = days().toInt();
+        final int currentDay = getCurrentDay();
+
+        //If the time (within the scope of the day) is in the future,
+        // There is no day offset
+        if(((1<<currentDay) & dayInt) == (1<<currentDay)){
+            if(System.currentTimeMillis() < time().getTimeInMillis()){
+                return 0;
+            }
+        }
+
+        // If, however, the time is in the past, it means
+        // it occurs at a future day, so we must find that offset
+        int i=1;
+        int day = (currentDay+i)%7;
+        for(;i<8;i++){
+            if (((1<<day) & dayInt) == (1<<day)){
+                return i;
+            }
+            day++;
+            day%=7;
+        }
+
+        // Shouldn't happen
+        throw new IllegalStateException("!!");
+    }
+
+    // Return the exact time of the next alarm
+    long getNextAlarm(){
+        final int DAY = 24*60*60*1000;
+        final int dayOffset = getDayOffsetNextAlarm();
+        return time().getTimeInMillis() + dayOffset * DAY;
+    }
 
 }

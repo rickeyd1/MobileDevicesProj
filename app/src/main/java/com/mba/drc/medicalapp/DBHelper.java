@@ -154,8 +154,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
             // First schedule
             Intent intent = new Intent(context, theClass);
+            intent.putExtra("drug", drugAlarm.name());
+            intent.putExtra("dosage", drugAlarm.dosage());
+            intent.putExtra("time", drugAlarm.time().toString());
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, uniqueId, intent, 0);
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, drugAlarm.time().getTimeInMillis(), pendingIntent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, drugAlarm.getNextAlarm(), pendingIntent);
 
             // Now update schedule in database
             final String updateQuery = String.format(Locale.US,
