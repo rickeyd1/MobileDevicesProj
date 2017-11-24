@@ -10,7 +10,7 @@ android:
     # The SDK version used to compile NewPipe
     - android-27
 
-script: yes | sdkmanager --licenses && ./gradlew -Dorg.gradle.jvmargs=-Xmx1536m assembleDebug lintDebug testDebugUnitTest
+script: yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses && ./gradlew -Dorg.gradle.jvmargs=-Xmx1536m assembleDebug lintDebug testDebugUnitTest
 
 licenses:
   - '.+'
