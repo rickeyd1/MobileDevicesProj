@@ -65,6 +65,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_DAYS = "days";
     private static final String KEY_DOSAGE = "dosage";
     private static final String KEY_URGENCY = "urgency";
+    private static final String KEY_SCHEDULE = "alarm_intent_id";// Shows the id of the AlarmManager intent
+                                                    // or 0 if not scheduled
     private static final String KEY_TIME_OCCURRED = "time_occurred";
     private static final String KEY_TIME_RESPONDED = "time_responded";
     private static final String KEY_DRUG_ID = "drug_alarm_id";
@@ -83,6 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
         drugTable.addColumn(KEY_DAYS, "INTEGER");
         drugTable.addColumn(KEY_DOSAGE, "TEXT");
         drugTable.addColumn(KEY_URGENCY, "INTEGER");
+        drugTable.addColumn(KEY_SCHEDULE, "INTEGER");
 
         eventTable = new Table(EVENT_TABLE_NAME);
         eventTable.addColumn(KEY_ID, "INTEGER PRIMARY KEY");
@@ -123,13 +126,14 @@ public class DBHelper extends SQLiteOpenHelper {
         final String dosage = drugAlarm.dosage();
         final int urgency = drugAlarm.urgency().value();
 
-        final String formatString = "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (%s, %d, %d, %s, %d)";
+        final String formatString =
+                "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES (%s, %d, %d, %s, %d, %d)";
 
         final String addStatement = String.format(Locale.US,
                 formatString,
                 DRUG_TABLE_NAME,
-                KEY_NAME, KEY_TIME, KEY_DAYS, KEY_DOSAGE, KEY_URGENCY,
-                sqlEscape(name), time, days, sqlEscape(dosage), urgency);
+                KEY_NAME, KEY_TIME, KEY_DAYS, KEY_DOSAGE, KEY_URGENCY, KEY_SCHEDULE,
+                sqlEscape(name), time, days, sqlEscape(dosage), urgency, 0);
 
         db.execSQL(addStatement);
         db.close();
@@ -145,7 +149,7 @@ public class DBHelper extends SQLiteOpenHelper {
         final int urgency = drugAlarm.urgency().value();
 
         final String formatString =
-                "UPDATE %s SET %s=%s, %s=%d, %s=%d, %s=%s, %s=%d WHERE %s=%d";
+                "UPDATE %s SET %s=%s, %s=%d, %s=%d, %s=%s, %s=%d, %s=%d WHERE %s=%d";
 
         final String updateStatement = String.format(Locale.US,
                 formatString,
@@ -155,7 +159,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 KEY_DAYS, days,
                 KEY_DOSAGE, sqlEscape(dosage),
                 KEY_URGENCY, urgency,
-                KEY_ID, id);
+                KEY_ID, id,
+                KEY_SCHEDULE, 0
+                );
 
         db.execSQL(updateStatement);
         db.close();
