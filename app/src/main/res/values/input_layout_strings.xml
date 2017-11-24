@@ -28,4 +28,5 @@
     <string name="input_ok_button">Add</string>
     <string name="input_ok_button_alternative">Update</string>
     <string name="input_cancel_button">Cancel</string>
+    <string name="input_remove_button">Remove</string>
 </resources>

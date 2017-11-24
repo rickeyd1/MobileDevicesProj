@@ -161,6 +161,21 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Delete a particular drug alarm
+    void removeDrugAlarm(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        final String deleteStatement = String.format(
+                Locale.US,
+                "DELETE FROM %s WHERE %s=%d",
+                DRUG_TABLE_NAME,
+                KEY_ID,
+                id
+        );
+
+        db.execSQL(deleteStatement);
+        db.close();
+    }
+
     // Return a particular drug alarm
     DrugAlarm getDrugAlarm(int id){
         return getDrugAlarmsByQuery(String.format(

@@ -86,7 +86,9 @@ public class InputActivity extends AppCompatActivity {
             // Make different title
             ((TextView)findViewById(R.id.IL_Title)).setText(R.string.input_title_alternative);
             Button okButton = findViewById(R.id.input_ok_button);
+            Button removeButton = findViewById(R.id.input_remove_button);
             okButton.setText(R.string.input_ok_button_alternative);
+            removeButton.setVisibility(View.VISIBLE);
 
         }
 
@@ -98,6 +100,10 @@ public class InputActivity extends AppCompatActivity {
         startActivity(mainActivity);
     }
 
+    public void remove(View view){
+        dbHelper.removeDrugAlarm(drugAlarm.id());
+        cancel(view);
+    }
     public void add(View view){
         // Get and validate all inputs
         String name;

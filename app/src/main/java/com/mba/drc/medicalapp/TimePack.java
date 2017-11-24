@@ -34,7 +34,7 @@ class TimePack {
 
     public String toString(){
         return String.format(Locale.US,
-                "%d:%d %s",
+                "%d:%02d %s",
                 hour()%12, minute(),
                 hour()>12?"PM":"AM");
     }
