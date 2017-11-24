@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient">
+>
 
     <Button
         android:id="@+id/button2"
@@ -11,8 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@color/tBarDark"
+        android:background="@android:color/holo_blue_light"
         android:ems="10"
+        android:onClick="stop"
         android:text="@string/taken" />
 
     <Button
@@ -24,18 +25,20 @@
         android:layout_marginTop="30dp"
         android:background="@android:color/holo_orange_light"
         android:ems="10"
+        android:onClick="stop"
         android:text="@string/snooze" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/button3"
+        android:layout_below="@+id/button3"
+        android:layout_marginTop="37dp"
         android:background="@color/colorPrimary"
         android:ems="10"
-        android:text="@string/dismiss"
-        android:layout_below="@+id/button3"
-        android:layout_alignStart="@+id/button3"
-        android:layout_marginTop="37dp" />
+        android:onClick="stop"
+        android:text="@string/dismiss" />
 
     <TextView
         android:id="@+id/textView12"

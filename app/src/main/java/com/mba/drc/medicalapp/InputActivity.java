@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Button;
 
+import java.util.Locale;
+
 /**
  * Created by dagan on 11/23/17.
  */
@@ -155,7 +157,14 @@ public class InputActivity extends AppCompatActivity {
             }
 
             // Run scheduler
-            dbHelper.scheduleAll(this, AlarmReceiver.class);
+            if(0 == dbHelper.scheduleAll(this, AlarmReceiver.class)){
+                Toast.makeText(this, "0 alarms w/ 0", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this,
+                        String.format(Locale.US, "%d", drugAlarm.time().getTimeInMillis()),
+                        Toast.LENGTH_LONG).show();
+            }
+
 
             // Return to main
             Intent mainActivity = new Intent(this, MainActivity.class);

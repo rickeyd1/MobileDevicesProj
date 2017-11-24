@@ -129,7 +129,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // Schedule any alarms
-   void scheduleAll(Context context, Class theClass){
+   int scheduleAll(Context context, Class theClass){
        SQLiteDatabase db = this.getWritableDatabase();
         // Get all unscheduled drug alarms (ie where SCHEDULE is 0)
         ArrayList<DrugAlarm> drugAlarms = getDrugAlarmsByQuery(String.format(
@@ -170,6 +170,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         }
         db.close();
+        return drugAlarms.size();
 
     }
     
