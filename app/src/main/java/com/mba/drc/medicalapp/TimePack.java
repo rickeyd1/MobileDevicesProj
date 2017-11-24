@@ -1,6 +1,7 @@
 package com.mba.drc.medicalapp;
 
 import java.util.Locale;
+import java.util.Calendar;
 
 /**
  * Just stores hours and minutes
@@ -37,6 +38,14 @@ class TimePack {
                 "%d:%02d %s",
                 hour()%12, minute(),
                 hour()>12?"PM":"AM");
+    }
+
+    long getTimeInMillis(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, mHour);
+        calendar.set(Calendar.MINUTE, mMinute);
+        return calendar.getTimeInMillis();
+
     }
 
 }

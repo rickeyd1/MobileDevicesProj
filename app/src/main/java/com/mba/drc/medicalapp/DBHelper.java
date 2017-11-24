@@ -1,13 +1,23 @@
 package com.mba.drc.medicalapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import java.util.Calendar;
+
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ArrayList;
+
+import static android.content.Context.ALARM_SERVICE;
 
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -117,6 +127,51 @@ public class DBHelper extends SQLiteOpenHelper {
         string = "'"+string+"'";
         return string;
     }
+
+    // Schedule any alarms
+   void scheduleAll(Context context, Class theClass){
+       SQLiteDatabase db = this.getWritableDatabase();
+        // Get all unscheduled drug alarms (ie where SCHEDULE is 0)
+        ArrayList<DrugAlarm> drugAlarms = getDrugAlarmsByQuery(String.format(
+                Locale.US,
+                "SELECT * FROM %s WHERE %s=%d",
+                DRUG_TABLE_NAME,
+                KEY_SCHEDULE, 0
+                ));
+        // Prepare manager
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+
+        // Get a new unique ID set for PendingIntent
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor edit = preferences.edit();
+        final String uniqueIntLabel = "unique_schedule_id";
+        int uniqueId = preferences.getInt(uniqueIntLabel, 1);
+        edit.putInt(uniqueIntLabel, uniqueId+drugAlarms.size()+5);
+        edit.apply();
+
+        for(DrugAlarm drugAlarm : drugAlarms){
+            uniqueId++;
+
+            // First schedule
+            Intent intent = new Intent(context, theClass);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, uniqueId, intent, 0);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, drugAlarm.time().getTimeInMillis(), pendingIntent);
+
+            // Now update schedule in database
+            final String updateQuery = String.format(Locale.US,
+                    "UPDATE %s SET %s=%d WHERE %s=%d",
+                    DRUG_TABLE_NAME,
+                    KEY_SCHEDULE,
+                    uniqueId,
+                    KEY_ID,
+                    drugAlarm.id()
+                    );
+            db.execSQL(updateQuery);
+
+        }
+        db.close();
+
+    }
     
     void addDrugAlarm(DrugAlarm drugAlarm){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -160,7 +215,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 KEY_DOSAGE, sqlEscape(dosage),
                 KEY_URGENCY, urgency,
                 KEY_ID, id,
-                KEY_SCHEDULE, 0
+                KEY_SCHEDULE, drugAlarm.schedule()
                 );
 
         db.execSQL(updateStatement);
@@ -228,6 +283,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 );
                 drugAlarm.setUrgency(
                         Urgency.values()[cursor.getInt(drugTable.columnIndex(KEY_URGENCY))]
+                );
+                drugAlarm.setSchedule(
+                        cursor.getInt(drugTable.columnIndex(KEY_SCHEDULE))
                 );
                 returnList.add(drugAlarm);
             }

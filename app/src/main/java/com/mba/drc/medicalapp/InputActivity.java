@@ -154,6 +154,9 @@ public class InputActivity extends AppCompatActivity {
                 dbHelper.addDrugAlarm(drugAlarm);
             }
 
+            // Run scheduler
+            dbHelper.scheduleAll(this, AlarmReceiver.class);
+
             // Return to main
             Intent mainActivity = new Intent(this, MainActivity.class);
             startActivity(mainActivity);

@@ -13,6 +13,8 @@ public class DrugAlarm {
     private Urgency mUrgency;
     // Id in the database
     private int mId;
+    // Scheduling ID - only for use in DBHelper.java
+    private int mSchedule;
 
     DrugAlarm(){
         mName = "";
@@ -20,6 +22,7 @@ public class DrugAlarm {
         mDays = new DayGroup();
         mDosage = "";
         mUrgency = Urgency.MID_URGENCY;
+        mSchedule = 0;
     }
 
     String name(){return mName;}
@@ -28,6 +31,7 @@ public class DrugAlarm {
     String dosage(){return mDosage;}
     Urgency urgency(){return mUrgency;}
     int id(){return mId;}
+    int schedule(){return mSchedule;}
 
     void setName(String n){mName = n;};
     void setTime(TimePack t){mTime = t;}
@@ -35,6 +39,7 @@ public class DrugAlarm {
     void setDosage(String d){mDosage = d;}
     void setUrgency(Urgency u){mUrgency = u;}
     void setId(int i){mId = i;}
+    void setSchedule(int s){mSchedule=s;}
 
     @Override
     public String toString(){
