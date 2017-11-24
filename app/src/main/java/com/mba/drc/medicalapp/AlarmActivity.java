@@ -25,7 +25,7 @@ public class AlarmActivity extends AppCompatActivity {
         ringtone.play();
     }
 
-    void stop(View view){
+    public void stop(View view){
         ringtone.stop();
     }
 }
