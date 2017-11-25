@@ -154,9 +154,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             // First schedule
             Intent intent = new Intent(context, theClass);
-            intent.putExtra("drug", drugAlarm.name());
-            intent.putExtra("dosage", drugAlarm.dosage());
-            intent.putExtra("time", drugAlarm.time().toString());
+            intent.putExtra("id", drugAlarm.id());
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, uniqueId, intent, 0);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, drugAlarm.getNextAlarm(), pendingIntent);
 
