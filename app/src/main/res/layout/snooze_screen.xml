@@ -5,40 +5,6 @@
     android:layout_height="match_parent"
 >
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@android:color/holo_blue_light"
-        android:ems="10"
-        android:onClick="dismiss"
-        android:text="@string/taken" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/button2"
-        android:layout_below="@+id/button2"
-        android:layout_marginTop="30dp"
-        android:background="@android:color/holo_orange_light"
-        android:ems="10"
-        android:onClick="snooze"
-        android:text="@string/snooze" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/button3"
-        android:layout_below="@+id/button3"
-        android:layout_marginTop="37dp"
-        android:background="@color/colorPrimary"
-        android:ems="10"
-        android:onClick="dismiss"
-        android:text="@string/dismiss" />
 
     <TextView
         android:id="@+id/infoTV"
@@ -48,5 +14,25 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="54dp"
         android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+    <Button
+        android:id="@+id/snoozeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/infoTV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="131dp"
+        android:onClick="snooze"
+        android:text="@string/snooze" />
+
+    <Button
+        android:id="@+id/dismissButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/snoozeButton"
+        android:layout_below="@+id/snoozeButton"
+        android:layout_marginTop="20dp"
+        android:onClick="dismiss"
+        android:text="@string/dismiss" />
 
 </RelativeLayout>
