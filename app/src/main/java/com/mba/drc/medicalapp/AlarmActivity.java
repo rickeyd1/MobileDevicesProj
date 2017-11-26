@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.os.CountDownTimer;
-import android.os.Vibrator;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -56,6 +55,8 @@ public class AlarmActivity extends AppCompatActivity {
             }
             final DrugAlarm drugAlarm = dbHelper.getDrugAlarm(id);
             dbHelper.updateDrugAlarm(drugAlarm);
+            // And reschedule
+            dbHelper.scheduleAll(this, AlarmReceiver.class);
 
             // Create message
             final TextView infoTV = findViewById(R.id.infoTV);
@@ -113,11 +114,11 @@ public class AlarmActivity extends AppCompatActivity {
         edit.apply();
 
         // Get snooze time in minutes
-        final int snoozeTime = preferences.getInt("snooze_time", 1);
+        final int snoozeTime = preferences.getInt("snooze_time", DefaultSettings.SNOOZE_TIME);
 
         // Prepare manager
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(this, this.getClass());
+        Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra("id", id);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, uniqueId, intent, 0);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,

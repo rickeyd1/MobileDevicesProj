@@ -11,4 +11,5 @@ public final class DefaultSettings {
     final static int LOW_URGENCY_TIMEOUT=30*second;
     final static int MID_URGENCY_TIMEOUT=5*minute;
     final static int HIGH_URGENCY_TIMEOUT=24*hour;
+    final static int SNOOZE_TIME=1;// in minutes
 }
