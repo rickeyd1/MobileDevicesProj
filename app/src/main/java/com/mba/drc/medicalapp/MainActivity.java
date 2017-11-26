@@ -3,6 +3,10 @@ package com.mba.drc.medicalapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.util.List;
+
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -39,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            Toolbar toolbar = (Toolbar) findViewById(R.id.the_toolbar);
+            setSupportActionBar(toolbar);
+
+
         }catch(Exception e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
@@ -57,5 +65,28 @@ public class MainActivity extends AppCompatActivity {
         inputActivity.putExtra(INTENT_EXTRA_UPDATE_DRUG_ALARM, true);
         inputActivity.putExtra(INTENT_EXTRA_DRUG_ALARM_ID, drugId);
         startActivity(inputActivity);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_debug:
+                Intent intent = new Intent(this, DebugActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }
