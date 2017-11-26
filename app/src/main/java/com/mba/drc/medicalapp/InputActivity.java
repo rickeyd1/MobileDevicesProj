@@ -160,6 +160,34 @@ public class InputActivity extends AppCompatActivity {
             if(updateExisting)dbHelper.unscheduleDrugAlarm(this, AlarmReceiver.class, drugAlarm);
             if(0 == dbHelper.scheduleAll(this, AlarmReceiver.class)){
                 Toast.makeText(this, "0 alarms w/ a 0 schedule", Toast.LENGTH_SHORT).show();
+            }else{
+                // Inform user how many units of time left until next alarm
+                // Units depend on amount of time left
+                final long millisecondsLeft =
+                        (drugAlarm.getNextAlarm()-System.currentTimeMillis());
+                final int secondsLeft = (int)millisecondsLeft/1000;
+                final int minutesLeft = secondsLeft/60;
+                final int hoursLeft = minutesLeft/60;
+                final int daysLeft = hoursLeft/24;
+                final int timeDividers[] = {24, 60, 60, 1000};
+                final int timeValues[] = {daysLeft, hoursLeft, minutesLeft, secondsLeft};
+                final String timeStrings[] = {"day", "hour", "minute", "second"};
+                int i=0;
+                for(;i<2;i++){
+                    if (timeValues[i] != 0)break;
+                }
+                Toast.makeText(this,
+
+                        String.format(Locale.US,
+                                "Alarm set to run in %d %s%s, %d %s%s",
+                        timeValues[i],
+                        timeStrings[i],
+                                timeValues[i]==1?"":"s",
+                        timeValues[i+1]%timeDividers[i],
+                        timeStrings[i+1],
+                        timeValues[i+1]==1?"":"s"),
+
+                        Toast.LENGTH_LONG).show();
             }
 
 

@@ -52,7 +52,7 @@ public class DrugAlarm {
     }
 
     private int getCurrentDay(){
-        return Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        return Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1;
     }
     private int getDayOffsetNextAlarm(){
         final int dayInt = days().toInt();

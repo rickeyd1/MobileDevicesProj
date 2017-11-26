@@ -11,7 +11,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         Intent alarmActivity = new Intent(context, AlarmActivity.class);
-        alarmActivity.putExtra("id", intent.getStringExtra("id"));
+        alarmActivity.putExtra("id", intent.getIntExtra("id", -1));
         context.startActivity(alarmActivity);
     }
 }
