@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.CheckBox;
 import android.widget.TimePicker;
@@ -31,6 +32,8 @@ public class InputActivity extends AppCompatActivity {
     CheckBox satCB;
     EditText dosageET;
     RadioGroup urgencyRG;
+    RadioButton lowUrgencyRB;
+    RadioButton highUrgencyRB;
     DrugAlarm drugAlarm;
     boolean updateExisting;
 
@@ -43,6 +46,8 @@ public class InputActivity extends AppCompatActivity {
         timeTP = findViewById(R.id.time_tp);
         dosageET = findViewById(R.id.dosage_et);
         urgencyRG = findViewById(R.id.urgency_rg);
+        lowUrgencyRB = findViewById(R.id.low_urgency_rb);
+        highUrgencyRB = findViewById(R.id.high_urgency_db);
 
         sunCB = findViewById(R.id.sunCheck);
         monCB = findViewById(R.id.monCheck);
@@ -133,6 +138,8 @@ public class InputActivity extends AppCompatActivity {
                 return;
             }
             urgency = Urgency.MID_URGENCY;
+            if(lowUrgencyRB.isChecked())urgency=Urgency.LOW_URGENCY;
+            if(highUrgencyRB.isChecked())urgency=Urgency.HIGH_URGENCY;
 
         }catch(Exception e){
             Toast.makeText(this, "Invalid input", Toast.LENGTH_LONG).show();

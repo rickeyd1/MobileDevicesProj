@@ -1,10 +1,17 @@
 package com.mba.drc.medicalapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.AudioAttributes;
+import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,27 +26,40 @@ import java.util.Locale;
 
 public class AlarmActivity extends AppCompatActivity {
     private Ringtone ringtone;
+    private int id;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.snooze_screen);
 
+
         try {
+
             // Sound
             Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             ringtone = RingtoneManager.getRingtone(this, uri);
+            AudioAttributes attributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build();
+            ringtone.setAudioAttributes(attributes);
             ringtone.play();
 
-            // Create message
-            final DBHelper dbHelper = new DBHelper(this);
+            // Unschedule in database by updating
             final Intent intent = getIntent();
-            final TextView infoTV = findViewById(R.id.infoTV);
-            final int id = intent.getIntExtra("id", -1);
+            final DBHelper dbHelper = new DBHelper(this);
+
+            id = intent.getIntExtra("id", -1);
             if (id == -1) {
                 Toast.makeText(this, "Illegal identifier", Toast.LENGTH_LONG).show();
                 return;
             }
             final DrugAlarm drugAlarm = dbHelper.getDrugAlarm(id);
+            dbHelper.updateDrugAlarm(drugAlarm);
+
+            // Create message
+            final TextView infoTV = findViewById(R.id.infoTV);
+
             final String dosage = drugAlarm.dosage();
             final String name = drugAlarm.name();
             final String time = drugAlarm.time().toString();
@@ -49,19 +69,68 @@ public class AlarmActivity extends AppCompatActivity {
                     dosage.equals("") ? "" : dosage + " of ",
                     name, time
             ));
+
+
+            // Stop ringtone after certain number of seconds
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            final int lowUrgencyTimeout = preferences.getInt("low_urgency_timeout",
+                    DefaultSettings.LOW_URGENCY_TIMEOUT);
+            final int midUrgencyTimeout = preferences.getInt("mid_urgency_timeout",
+                    DefaultSettings.MID_URGENCY_TIMEOUT);
+            final int highUrgencyTimeout = preferences.getInt("high_urgency_timeout",
+                    DefaultSettings.HIGH_URGENCY_TIMEOUT);
+            final int timeout = drugAlarm.urgency()==Urgency.LOW_URGENCY?lowUrgencyTimeout:
+                    drugAlarm.urgency()==Urgency.MID_URGENCY?midUrgencyTimeout:highUrgencyTimeout;
+
+            new CountDownTimer((long) timeout, (long)1){
+                public void onTick(long timeRemaining){
+
+                }
+                public void onFinish(){
+                    if(ringtone.isPlaying())ringtone.stop();
+                }
+            }.start();
+
         }catch(Exception e){
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
 
     }
 
-    public void stop(View view){
+    public void dismiss(View view){
         this.finish();
     }
+
+    public void snooze(View view){
+
+
+        // Get unique ID
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor edit = preferences.edit();
+        final String uniqueIntLabel = "unique_schedule_id";
+        final int uniqueId = preferences.getInt(uniqueIntLabel, 1) + 1;
+        edit.putInt(uniqueIntLabel, uniqueId+5);
+        edit.apply();
+
+        // Get snooze time in minutes
+        final int snoozeTime = preferences.getInt("snooze_time", 1);
+
+        // Prepare manager
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this, this.getClass());
+        intent.putExtra("id", id);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, uniqueId, intent, 0);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis()+60*1000*snoozeTime, pendingIntent);
+
+        this.finish();
+    }
+
 
     @Override
     protected void onStop() {
         super.onStop();
-        ringtone.stop();
+        if (ringtone.isPlaying())
+            ringtone.stop();
     }
 }
