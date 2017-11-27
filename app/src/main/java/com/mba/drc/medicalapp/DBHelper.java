@@ -3,7 +3,6 @@ package com.mba.drc.medicalapp;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import java.util.Calendar;
 
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteOpenHelper;

@@ -1,11 +1,10 @@
-package com.mba.drc.medicalapp; /**
- * Created by dagan on 11/19/17.
- */
-import com.mba.drc.medicalapp.DayGroup;
+package com.mba.drc.medicalapp;
 
-import java.time.LocalTime;
+/*
+    Represents a reoccurring alarm
+ */
+
 import java.util.Calendar;
-import java.util.Date;
 
 public class DrugAlarm {
     private String mName;
@@ -35,7 +34,7 @@ public class DrugAlarm {
     int id(){return mId;}
     int schedule(){return mSchedule;}
 
-    void setName(String n){mName = n;};
+    void setName(String n){mName = n;}
     void setTime(TimePack t){mTime = t;}
     void setDays(DayGroup d){mDays = d;}
     void setDosage(String d){mDosage = d;}

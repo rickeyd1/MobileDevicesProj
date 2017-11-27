@@ -1,6 +1,6 @@
 package com.mba.drc.medicalapp;
 
-/**
+/*
  * This performs the actions necessary once an alarm runs
  */
 

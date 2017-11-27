@@ -4,7 +4,7 @@ package com.mba.drc.medicalapp;
  * Created by dagan on 11/26/17.
  */
 
-public final class DefaultSettings {
+final class DefaultSettings {
     private final static int second = 1000;
     private final static int minute = 60*second;
     private final static int hour = 60*minute;
