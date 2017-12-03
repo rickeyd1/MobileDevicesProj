@@ -74,12 +74,12 @@ public class AlarmActivity extends AppCompatActivity {
 
             // Stop ringtone after certain number of seconds
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-            final int lowUrgencyTimeout = preferences.getInt("low_urgency_timeout",
-                    DefaultSettings.LOW_URGENCY_TIMEOUT);
-            final int midUrgencyTimeout = preferences.getInt("mid_urgency_timeout",
-                    DefaultSettings.MID_URGENCY_TIMEOUT);
-            final int highUrgencyTimeout = preferences.getInt("high_urgency_timeout",
-                    DefaultSettings.HIGH_URGENCY_TIMEOUT);
+            final int lowUrgencyTimeout = preferences.getInt(Settings.LOW_URGENCY_TIMEOUT,
+                   Settings.LOW_URGENCY_TIMEOUT_DV);
+            final int midUrgencyTimeout = preferences.getInt(Settings.MID_URGENCY_TIMEOUT,
+                    Settings.MID_URGENCY_TIMEOUT_DV);
+            final int highUrgencyTimeout = preferences.getInt(Settings.HIGH_URGENCY_TIMEOUT,
+                    Settings.HIGH_URGENCY_TIMEOUT_DV);
             final int timeout = drugAlarm.urgency()==Urgency.LOW_URGENCY?lowUrgencyTimeout:
                     drugAlarm.urgency()==Urgency.MID_URGENCY?midUrgencyTimeout:highUrgencyTimeout;
 
@@ -114,7 +114,7 @@ public class AlarmActivity extends AppCompatActivity {
         edit.apply();
 
         // Get snooze time in minutes
-        final int snoozeTime = preferences.getInt("snooze_time", DefaultSettings.SNOOZE_TIME);
+        final int snoozeTime = preferences.getInt(Settings.SNOOZE_TIME, Settings.SNOOZE_TIME_DV);
 
         // Prepare manager
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);

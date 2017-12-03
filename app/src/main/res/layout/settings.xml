@@ -11,7 +11,7 @@
         android:layout_marginBottom="46dp"
         android:layout_marginStart="11dp"
         android:onClick="reset"
-        android:text="@string/reset_default" />
+        android:text="@string/settings_reset_default" />
 
     <TextView
         android:id="@+id/textView"
@@ -20,7 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
-        android:text="@string/settings"
+        android:text="@string/settings_title"
         android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
@@ -32,7 +32,7 @@
         android:layout_below="@+id/textView"
         android:layout_marginStart="19dp"
         android:layout_marginTop="40dp"
-        android:text="@string/low"
+        android:text="@string/settings_low"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
@@ -43,7 +43,7 @@
         android:layout_alignEnd="@+id/textView2"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="43dp"
-        android:text="@string/mid"
+        android:text="@string/settings_mid"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
@@ -54,7 +54,7 @@
         android:layout_alignStart="@+id/textView3"
         android:layout_below="@+id/textView3"
         android:layout_marginTop="53dp"
-        android:text="@string/high"
+        android:text="@string/settings_high"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
@@ -66,7 +66,7 @@
         android:layout_alignBottom="@+id/button"
         android:layout_alignStart="@+id/textView4"
         android:onClick="changeSettings"
-        android:text="@string/set_change" />
+        android:text="@string/settings_set_change" />
 
     <EditText
         android:id="@+id/lowUrgencyET"
