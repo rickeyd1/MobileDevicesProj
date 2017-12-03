@@ -50,18 +50,7 @@ public class DefaultSettings extends Activity {
             mid = Integer.parseInt(midET.getText().toString());
             high = Integer.parseInt(highET.getText().toString());
         } catch (Exception e) {
-            if(lowET.equals("")){
-                lowET.setText("30");
-                low = Integer.parseInt(lowET.getText().toString());
-            }
-            if(midET.equals("")){
-                midET.setText("5");
-                mid = Integer.parseInt(midET.getText().toString());
-            }
-            if(highET.equals("")){
-                highET.setText("24");
-                high = Integer.parseInt(highET.getText().toString());
-            }
+            //nothing
         }
         LOW_URGENCY_TIMEOUT = low*second;
         MID_URGENCY_TIMEOUT = mid*minute;
