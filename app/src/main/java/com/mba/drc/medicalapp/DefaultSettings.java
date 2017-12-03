@@ -52,12 +52,15 @@ public class DefaultSettings extends Activity {
         } catch (Exception e) {
             if(lowET.equals("")){
                 lowET.setText("30");
+                low = Integer.parseInt(lowET.getText().toString());
             }
             if(midET.equals("")){
-                midET.setText("30");
+                midET.setText("5");
+                mid = Integer.parseInt(midET.getText().toString());
             }
             if(highET.equals("")){
-                highET.setText("30");
+                highET.setText("24");
+                high = Integer.parseInt(highET.getText().toString());
             }
         }
         LOW_URGENCY_TIMEOUT = low*second;
