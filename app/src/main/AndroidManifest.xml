@@ -30,6 +30,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".DefaultSettings"
+            android:label="Settings"
+            android:parentActivityName=".MainActivity">
+
+        </activity>
+        
         <receiver android:process=":remote" android:name=".AlarmReceiver"/>
     </application>
 
