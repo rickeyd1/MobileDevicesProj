@@ -74,16 +74,16 @@ public class AlarmActivity extends AppCompatActivity {
 
             // Stop ringtone after certain number of seconds
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-            final int lowUrgencyTimeout = preferences.getInt(Settings.LOW_URGENCY_TIMEOUT,
+            final long lowUrgencyTimeout = preferences.getLong(Settings.LOW_URGENCY_TIMEOUT,
                    Settings.LOW_URGENCY_TIMEOUT_DV);
-            final int midUrgencyTimeout = preferences.getInt(Settings.MID_URGENCY_TIMEOUT,
+            final long midUrgencyTimeout = preferences.getLong(Settings.MID_URGENCY_TIMEOUT,
                     Settings.MID_URGENCY_TIMEOUT_DV);
-            final int highUrgencyTimeout = preferences.getInt(Settings.HIGH_URGENCY_TIMEOUT,
+            final long highUrgencyTimeout = preferences.getLong(Settings.HIGH_URGENCY_TIMEOUT,
                     Settings.HIGH_URGENCY_TIMEOUT_DV);
-            final int timeout = drugAlarm.urgency()==Urgency.LOW_URGENCY?lowUrgencyTimeout:
+            final long timeout = drugAlarm.urgency()==Urgency.LOW_URGENCY?lowUrgencyTimeout:
                     drugAlarm.urgency()==Urgency.MID_URGENCY?midUrgencyTimeout:highUrgencyTimeout;
 
-            new CountDownTimer((long) timeout, (long)1){
+            new CountDownTimer(timeout, (long)1){
                 public void onTick(long timeRemaining){
 
                 }

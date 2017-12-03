@@ -3,7 +3,9 @@
     <string name="settings_reset_default">Reset</string>
     <string name="settings_set_change">Accept</string>
     <string name="settings_title">Settings</string>
-    <string name="settings_low">Low urgency alarm duration:</string>
-    <string name="settings_mid">Mid urgency alarm duration:</string>
-    <string name="settings_high">High urgency alarm duration:</string>
+    <string name="settings_durations">Durations in Minutes</string>
+    <string name="settings_low">Low urgency alarm:</string>
+    <string name="settings_mid">Mid urgency alarm:</string>
+    <string name="settings_high">High urgency alarm:</string>
+    <string name="settings_snooze">Snooze:</string>
 </resources>
