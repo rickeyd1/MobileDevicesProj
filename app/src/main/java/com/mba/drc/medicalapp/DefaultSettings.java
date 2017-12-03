@@ -1,4 +1,4 @@
-package com.example.ric.final_build_redux;
+package com.mba.drc.medicalapp;
 
 import android.app.Activity;
 import android.os.Bundle;
