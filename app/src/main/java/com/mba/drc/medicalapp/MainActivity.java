@@ -58,4 +58,44 @@ public class MainActivity extends AppCompatActivity {
         inputActivity.putExtra(INTENT_EXTRA_DRUG_ALARM_ID, drugId);
         startActivity(inputActivity);
     }
+    
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            toggleActionBar();
+        }
+        return true;
+    }
+
+    private void toggleActionBar(){
+        ActionBar actionBar = getActionBar();
+        if(actionBar.isShowing()){
+            actionBar.hide();
+        } else {
+            actionBar.show();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if(id == R.id.menuitem_Settings){
+            startSettings();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void startSettings(){
+        Intent settingsIntent = new Intent(this, DefaultSettings.class);
+        startActivity(settingsIntent);
+    }
 }
