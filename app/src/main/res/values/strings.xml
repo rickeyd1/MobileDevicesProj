@@ -2,10 +2,16 @@
 <resources>
     <string name="app_name">MedicalApp</string>
 
-
     <!-- Snooze Strings -->
     <string name="taken">Medicine taken</string>
     <string name="snooze">Snooze</string>
     <string name="dismiss">Dismiss</string>
+    
+    <string name="reset_default">Reset to Default</string>
+    <string name="set_change">Change settings</string>
+    <string name="settings">Settings</string>
+    <string name="low">Low urgency time:</string>
+    <string name="mid">Mid urgency time:</string>
+    <string name="high">High urgency time:</string>
 
 </resources>
