@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         DBHelper dbHelper = new DBHelper(this);
+        dbHelper.unscheduleMissed();
+        dbHelper.scheduleAll(this, AlarmReceiver.class);
         final List<DrugAlarm> alarms;
         try {
             alarms = dbHelper.getDrugAlarms();

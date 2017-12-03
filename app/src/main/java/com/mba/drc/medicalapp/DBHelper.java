@@ -174,6 +174,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    // Unschedule any missed alarms
+    void unscheduleMissed(){
+        for(DrugAlarm drugAlarm : getDrugAlarms()){
+            if(drugAlarm.getNextAlarm() < System.currentTimeMillis()){
+                updateDrugAlarm(drugAlarm);
+            }
+        }
+    }
+
     void unscheduleDrugAlarm(Context context, Class theClass, DrugAlarm drugAlarm){
         // unschedule in alarm manager
         Intent intent = new Intent(context, theClass);
