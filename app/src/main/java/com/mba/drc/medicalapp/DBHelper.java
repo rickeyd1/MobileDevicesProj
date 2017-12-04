@@ -67,7 +67,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "MedicalAppMBA";
     private static final String DRUG_TABLE_NAME = "DrugAlarm";
-    private static final String EVENT_TABLE_NAME = "Event";
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_TIME = "time";
@@ -76,12 +75,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_URGENCY = "urgency";
     private static final String KEY_SCHEDULE = "alarm_intent_id";// Shows the id of the AlarmManager intent
                                                     // or 0 if not scheduled
-    private static final String KEY_TIME_OCCURRED = "time_occurred";
-    private static final String KEY_TIME_RESPONDED = "time_responded";
-    private static final String KEY_DRUG_ID = "drug_alarm_id";
-    private static final String KEY_RESPONSE = "response";
     private Table drugTable;
-    private Table eventTable;
 
     DBHelper(Context context)
     {
@@ -95,13 +89,6 @@ public class DBHelper extends SQLiteOpenHelper {
         drugTable.addColumn(KEY_DOSAGE, "TEXT");
         drugTable.addColumn(KEY_URGENCY, "INTEGER");
         drugTable.addColumn(KEY_SCHEDULE, "INTEGER");
-
-        eventTable = new Table(EVENT_TABLE_NAME);
-        eventTable.addColumn(KEY_ID, "INTEGER PRIMARY KEY");
-        eventTable.addColumn(KEY_TIME_OCCURRED, "INTEGER");
-        eventTable.addColumn(KEY_TIME_RESPONDED, "INTEGER");
-        eventTable.addColumn(KEY_DRUG_ID, "INTEGER");
-        eventTable.addColumn(KEY_RESPONSE, "INTEGER");
     }
 
 
@@ -109,14 +96,12 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL(drugTable.asQuery());
-        db.execSQL(eventTable.asQuery());
     }
 
     //upgrade database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldv, int newv){
         db.execSQL("DROP TABLE IF EXISTS "+DRUG_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS "+EVENT_TABLE_NAME);
         onCreate(db);
     }
 

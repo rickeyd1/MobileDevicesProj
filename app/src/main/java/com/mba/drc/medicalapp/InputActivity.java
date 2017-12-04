@@ -108,6 +108,7 @@ public class InputActivity extends AppCompatActivity {
     }
 
     public void remove(View view){
+        dbHelper.unscheduleDrugAlarm(this, AlarmReceiver.class, drugAlarm);
         dbHelper.removeDrugAlarm(drugAlarm.id());
         cancel(view);
     }
