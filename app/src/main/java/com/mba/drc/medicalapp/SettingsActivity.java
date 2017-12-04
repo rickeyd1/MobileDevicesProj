@@ -31,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    // Set the edits texts as current setting values
     private void setEditTexts(){
         lowET.setText(String.valueOf(
                 preferences.getLong(Settings.LOW_URGENCY_TIMEOUT, Settings.LOW_URGENCY_TIMEOUT_DV)
@@ -50,6 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    // Set to defaults
     public void reset(View view){
         SharedPreferences.Editor edit = preferences.edit();
         edit.putLong(Settings.LOW_URGENCY_TIMEOUT, Settings.LOW_URGENCY_TIMEOUT_DV);
@@ -61,6 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
         Toast.makeText(this, "Restored to Default settings", Toast.LENGTH_SHORT).show();
     }
 
+    // Change settings to values in edit texts
     public void changeSettings(View view){
         try {
             SharedPreferences.Editor edit = preferences.edit();

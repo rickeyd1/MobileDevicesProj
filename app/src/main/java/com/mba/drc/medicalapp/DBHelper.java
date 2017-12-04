@@ -168,8 +168,9 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    // unschedule in ALARM MANAGER ONLY, NOT the database
     void unscheduleDrugAlarm(Context context, Class theClass, DrugAlarm drugAlarm){
-        // unschedule in alarm manager
+
         Intent intent = new Intent(context, theClass);
         PendingIntent pendingIntent= PendingIntent.getBroadcast(
                 context,drugAlarm.schedule(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -177,8 +178,7 @@ public class DBHelper extends SQLiteOpenHelper {
         alarmManager.cancel(pendingIntent);
     }
 
-
-    
+    // Add a drug alarm to the database
     void addDrugAlarm(DrugAlarm drugAlarm){
         SQLiteDatabase db = this.getWritableDatabase();
         final String name = drugAlarm.name();
@@ -200,6 +200,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Change drug alarm in database (id must be present, it is assumed we originally got this
+    // object from the database in the first place
     void updateDrugAlarm(DrugAlarm drugAlarm){
         SQLiteDatabase db = this.getWritableDatabase();
         final int id = drugAlarm.id();

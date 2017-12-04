@@ -50,9 +50,18 @@ public class DrugAlarm {
                 time().toString());
     }
 
+    /* Return day of the week as so:
+        Sunday - 0
+        Monday - 1
+        ...
+        Saturday - 6
+     */
     private int getCurrentDay(){
         return Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1;
     }
+
+    // Return day in same manner as getCurrentDay(), but this time it's the day of the next
+    // occuring alarm
     private int getDayOffsetNextAlarm(){
         final int dayInt = days().toInt();
         final int currentDay = getCurrentDay();
@@ -81,9 +90,9 @@ public class DrugAlarm {
         throw new IllegalStateException("!!");
     }
 
-    // Return the exact time of the next alarm
+    // Return the exact time of the next alarm in milliseconds
     long getNextAlarm(){
-        final int DAY = 24*60*60*1000;
+        final int DAY = 24*60*60*1000;//24 hours in terms of milliseconds
         final int dayOffset = getDayOffsetNextAlarm();
         return time().getTimeInMillis() + dayOffset * DAY;
     }

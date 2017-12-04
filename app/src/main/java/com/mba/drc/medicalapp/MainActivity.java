@@ -21,9 +21,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+
         DBHelper dbHelper = new DBHelper(this);
+        // Make sure there are no missed alarms
         dbHelper.unscheduleMissed();
         dbHelper.scheduleAll(this, AlarmReceiver.class);
+
+        // Populate the list of alarms on the layout
         final List<DrugAlarm> alarms;
         try {
             alarms = dbHelper.getDrugAlarms();
@@ -50,12 +55,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Go to the InputActivity in add mode
     public void addNewDrugAlarm(View view){
         Intent inputActivity = new Intent(this, InputActivity.class);
         inputActivity.putExtra(INTENT_EXTRA_UPDATE_DRUG_ALARM, false);
         startActivity(inputActivity);
     }
 
+    // Go to the InputActivity in edit mode
     // Note: drugId is the SQL id
     public void updateDrugAlarm(int drugId){
         Intent inputActivity = new Intent(this, InputActivity.class);
