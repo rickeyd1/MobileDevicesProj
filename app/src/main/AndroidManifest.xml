@@ -16,26 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InputActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".InputActivity"
+                  android:label="Input"
+                  android:parentActivityName=".MainActivity">
+            
         </activity>
         <activity android:name=".AlarmActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".SettingsActivity"
+                  android:label="Settings"
+                  android:parentActivityName=".MainActivity">
+           
         </activity>
         <receiver android:process=":remote" android:name=".AlarmReceiver"/>
     </application>
